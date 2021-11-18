@@ -23,8 +23,8 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-	<script src="js/html5shiv.js"></script>
-	<script src="js/respond.min.js"></script>
+	<script src="{{asset('/js/html5shiv.js')}}"></script>
+	<script src="{{asset('/js/respond.min.js')}}"></script>
 	<![endif]-->
 </head>
 
@@ -104,7 +104,7 @@
                         </li>
                         <li><a href="javascript:void(0)" class="collapsible-header"><i class="fa fa-user" aria-hidden="true"></i> User Management</a>
                             <div class="collapsible-body left-sub-menu">
-                                <ul>
+                      ---1          <ul>
                                     <li><a href="allUser">All Students</a>
                                     </li>
                                     <li><a href="newUser">Add New Admin</a>

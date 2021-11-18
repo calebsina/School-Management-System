@@ -6,6 +6,9 @@ use App\Http\controllers\authController;
 use App\Models\user;
 use App\Models\course;
 use App\Models\specialitie;
+use App\Models\timetable;
+use App\Models\exam;
+
 
 
 /*
@@ -26,16 +29,17 @@ Route::group(['middleware'=>['isLoggedIn']],function(){
     });
 
 //route for all courses page
-    Route::get('/allCourses', function () {
-        return view('allCourses');
-    });
-
+    Route::get('/allCourses', [adminController::class,'allCourses']);
+//route to view courses for each department
+    Route::get('edit/{name}', [adminController::class,'showCourse']);
 
 //route to create new course
     Route::view("/newCourse","newCourse");
 
 //route to view all users
     Route::view("/allUser","allUser");
+//to view each course in each department
+    Route::view("/courses","courses");
 
 //route to add new user
     Route::view("/newUser","newUser");
@@ -61,7 +65,6 @@ Route::group(['middleware'=>['isLoggedIn']],function(){
 //route to view Time table
     Route::view("/timetable","timetable");
 
-
 //route to submit new courses
     Route::Post('/addCourse',[adminController::class,'addCourse'])->name('addcourse');
 
@@ -72,6 +75,12 @@ Route::group(['middleware'=>['isLoggedIn']],function(){
     Route::post('/addSpecial',[adminController::class,'addSpeciality'])->name('addSpecial');
 //route for admin registration
     route::post('/signUp',[authController::class,'newUser'])->name('signUp');
+
+    //route to create timetable
+    route::post('/addTimetable',[adminController::class,'addTimeTable'])->name('addTimetable');
+
+    //route to create exam timetable
+    route::post('/exam',[adminController::class,'addExam'])->name('exam');
 });
 
 //route for header
@@ -88,6 +97,6 @@ route::post('/login-user',[authController::class,'loginUser'])->name('login-user
 route::get('/logout',[authController::class,'logout']);
 
 route::get('/', function (){
-    return redirect('/login')->middleware('alreadyLoggedIn');
+    return redirect('/login');
 });
 

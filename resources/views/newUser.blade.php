@@ -77,7 +77,7 @@
 											<div class="file-field input-field col s12">
 												<div class="btn admin-upload-btn">
 													<span>File</span>
-													<input type="file" name="file1">
+													<input type="file" accept=".jpg, .png" name="file1">
 												</div>
 												<div class="file-path-wrapper">
 													<input class="file-path validate" VALUE="{{old('file')}}" name="file" type="text" placeholder="Profile image">

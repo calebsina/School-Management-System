@@ -26,14 +26,15 @@
                             <li>
                                 <div class="dash-book dash-b-1">
                                     <h5>All Courses</h5>
-                                    <h4>948</h4>
+
+                                    <h4>654</h4>
                                     <a href="#">View more</a>
                                 </div>
                             </li>
                             <li>
                                 <div class="dash-book dash-b-2">
                                     <h5>Admission</h5>
-                                    <h4>672</h4>
+                                    <h4>915</h4>
                                     <a href="">View more</a>
                                 </div>
                             </li>

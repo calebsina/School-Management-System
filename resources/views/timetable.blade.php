@@ -28,11 +28,7 @@
                     <p>Here you could create new Time table for students all levels</p>
 
                     <ul class="nav nav-tabs tab-list">
-                        <li class="active"><a data-toggle="tab" href="#home" aria-expanded="true"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> <span>Timetable 1</span></a>
-                        </li>
-                        <li class=""><a data-toggle="tab" href="#menu1" aria-expanded="false"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> <span>Timetable 2</span></a>
-                        </li>
-                        <li class=""><a data-toggle="tab" href="#menu2" aria-expanded="false"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> <span>Timetable 3</span></a>
+                        <li class="active"><a data-toggle="tab" href="#home" aria-expanded="true"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> <span>Create Timetable </span></a>
                         </li>
                     </ul>
 
@@ -44,7 +40,13 @@
                                     <p>All details about Time Table</p>
                                 </div>
                                 <div class="bor">
-									<form method="post" action="{{route('')}}" enctype="multipart/form-data">
+									<form method="post" action="{{route('addTimetable')}}" enctype="multipart/form-data">
+                                        @if(Session::has('success'))
+                                            <div class="alert alert-success">{{session::get('success')}}</div>
+                                        @endif
+                                        @if(Session::has('fail'))
+                                            <div class="alert alert-danger">{{session::get('fail')}}</div>
+                                        @endif
                                         @csrf
                                         <div class="row">
                                                         <div class="input-field col s12">
@@ -57,67 +59,74 @@
                                                                 <option value="Degree">Degree</option>
                                                                 <option value="License">License</option>
                                                             </select>
-                                                            <span class="text-danger">@error('department') {{$message}} @enderror</span>
+                                                            <span class="text-danger">@error('program') {{$message}} @enderror</span>
                                                         </div>
                                                 </div>
+
                                         <div class="row">
                                                     <div class="input-field col s12">
-                                                        <select name="department">
-                                                            <option value="" disabled selected>Select Department</option>
-                                                            <option value="Software">Software</option>
-                                                            <option value="2">Banking & Finance</option>
-                                                            <option value="4">Transport & Logistics</option>
-                                                            <option value="5">Human Resource</option>
+                                                        <select name="special">
+                                                            {{$special = DB::table('specialities')->select('name')->get()}}
+                                                            <option value="" disabled selected>Select Speciality</option>
+                                                            @foreach($special as $key)
+                                                                <option value="{{$key->name}}">{{$key->name}}</option>
+                                                            @endforeach
+                                                        <span class="text-danger">@error('special') {{$message}} @enderror</span>
                                                         </select>
                                                     </div>
-                                                </div>
+                                        </div>
+
                                                 <div class="row">
                                                     <div class="input-field col s12">
-                                                        <select>
+                                                        <select name="course">
+                                                            {{$course = DB::table('courses')->select('course_name')->get()}}
                                                             <option value="" disabled selected>Select Course</option>
-                                                            <option value="1">Case Study</option>
-                                                            <option value="2">French</option>
-                                                            <option value="4">English</option>
-                                                            <option value="5">Law and Citizenship</option>
+                                                            @foreach($course as $data)
+                                                            <option value="{{$data->course_name}}">{{$data->course_name}}</option>
+                                                            @endforeach
                                                         </select>
+                                                        <span class="text-danger">@error('course') {{$message}} @enderror</span>
                                                     </div>
                                                 </div>
 
                                                 <div class="row">
                                                     <div class="input-field col s12">
-                                                        <select>
+                                                        <select name="day">
                                                             <option value="" disabled selected>Select Day</option>
-                                                            <option value="1">Monday</option>
-                                                            <option value="2">Tuesday</option>
-                                                            <option value="4">Wednesday</option>
-                                                            <option value="4">Thursday</option>
-                                                            <option value="5">Friday</option>
-                                                            <option value="5">Saturday</option>
+                                                            <option value="monday">Monday</option>
+                                                            <option value="Tuesday">Tuesday</option>
+                                                            <option value="Wednesday">Wednesday</option>
+                                                            <option value="Thursday">Thursday</option>
+                                                            <option value="Friday">Friday</option>
+                                                            <option value="Saturday">Saturday</option>
                                                         </select>
+                                                        <span class="alert-danger">@error('day') {{$message}} @enderror</span>
                                                     </div>
                                                 </div>
                                             <div class="row">
                                                     <div class="input-field col s12">
-                                                        <select>
+                                                        <select name="hall">
                                                             <option value="" disabled selected>Select Hall</option>
-                                                            <option value="1">Hall 1</option>
-                                                            <option value="2">Hall 2</option>
-                                                            <option value="4">Hall 3</option>
-                                                            <option value="5">Hall 4</option>
+                                                            <option value="Hall 1">Hall 1</option>
+                                                            <option value="Hall 2">Hall 2</option>
+                                                            <option value="Hall 3">Hall 3</option>
+                                                            <option value="Hall 4">Hall 4</option>
                                                         </select>
+                                                        <span class="alert-danger">@error('hall') {{$message}} @enderror</span>
                                                     </div>
                                                 </div>
                                             <div class="row">
                                                 <div class="input-field col s12">
-                                                    <select>
+                                                    <select name="time">
                                                         <option value="" disabled selected>Select Time</option>
-                                                        <option value="1">08am - 10am</option>
-                                                        <option value="2">10am - 12pm</option>
-                                                        <option value="3">01pm - 03pm</option>
-                                                        <option value="4">03pm - 05pm</option>
-                                                        <option value="5">05pm - 07pm</option>
-                                                        <option value="6">07pm - 09pm</option>
+                                                        <option value="08am - 10am">08am - 10am</option>
+                                                        <option value="10am - 12pm">10am - 12pm</option>
+                                                        <option value="01pm - 03pm">01pm - 03pm</option>
+                                                        <option value="03pm - 05pm">03pm - 05pm</option>
+                                                        <option value="05pm - 07pm">05pm - 07pm</option>
+                                                        <option value="07pm - 09pm">07pm - 09pm</option>
                                                     </select>
+                                                    <span class="text-danger">@error('time') {{$message}} @enderror</span>
                                                 </div>
                                             </div>
                                         <div class="row">
@@ -129,181 +138,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="menu1" class="tab-pane fade">
-                            <div class="inn-title">
-                            <h4>Details</h4>
-                                    <p>All details about timetable</p>
-                                </div>
-                                <div class="bor">
-									<form>
-                                        <div class="row">
-                                                        <div class="input-field col s12">
-                                                            <select>
-                                                                <option value="" disabled selected>Select Program</option>
-                                                                <option value="1">HND 1</option>
-                                                                <option value="2">BTS 1</option>
-                                                                <option value="4">HND 2</option>
-                                                                <option value="5">BTS 2</option>
-                                                                <option value="5">Degree</option>
-                                                                <option value="5">Liscense</option>
-                                                            </select>
-                                                        </div>
-                                                </div>
-                                        <div class="row">
-                                                    <div class="input-field col s12">
-                                                        <select>
-                                                            <option value="" disabled selected>Select Department</option>
-                                                            <option value="1">Software</option>
-                                                            <option value="2">Banking & Finance</option>
-                                                            <option value="4">Transport & Logistics</option>
-                                                            <option value="5">Human Resource</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="input-field col s12">
-                                                        <select>
-                                                            <option value="" disabled selected>Select Course</option>
-                                                            <option value="1">Case Study</option>
-                                                            <option value="2">French</option>
-                                                            <option value="4">English</option>
-                                                            <option value="5">Law and Citizenship</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
 
-                                                <div class="row">
-                                                    <div class="input-field col s12">
-                                                        <select>
-                                                            <option value="" disabled selected>Select Day</option>
-                                                            <option value="1">Monday</option>
-                                                            <option value="2">Tuesday</option>
-                                                            <option value="4">Wednesday</option>
-                                                            <option value="4">Thursday</option>
-                                                            <option value="5">Friday</option>
-                                                            <option value="5">Saturday</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            <div class="row">
-                                                    <div class="input-field col s12">
-                                                        <select>
-                                                            <option value="" disabled selected>Select Hall</option>
-                                                            <option value="1">Hall 1</option>
-                                                            <option value="2">Hall 2</option>
-                                                            <option value="4">Hall 3</option>
-                                                            <option value="5">Hall 4</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            <div class="row">
-                                                <div class="input-field col s12">
-                                                    <select>
-                                                        <option value="" disabled selected>Select Time</option>
-                                                        <option value="1">08am - 10am</option>
-                                                        <option value="2">10am - 12pm</option>
-                                                        <option value="3">01pm - 03pm</option>
-                                                        <option value="4">03pm - 05pm</option>
-                                                        <option value="5">05pm - 07pm</option>
-                                                        <option value="6">07pm - 09pm</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        <div class="row">
-                                            <div class="input-field col s12">
-                                                <i class="waves-effect waves-light btn-large waves-input-wrapper" style=""><input type="submit" class="waves-button-input" value="Submit"></i>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        <div id="menu3" class="tab-pane fade">
-                            <div class="inn-title">
-                            <h4>Details</h4>
-                                    <p>All details about exams</p>
-                                </div>
-                                <div class="bor">
-									<form>
-                                        <div class="row">
-                                                        <div class="input-field col s12">
-                                                            <select>
-                                                                <option value="" disabled selected>Select Program</option>
-                                                                <option value="1">HND 1</option>
-                                                                <option value="2">BTS 1</option>
-                                                                <option value="4">HND 2</option>
-                                                                <option value="5">BTS 2</option>
-                                                                <option value="5">Degree</option>
-                                                                <option value="5">Liscense</option>
-                                                            </select>
-                                                        </div>
-                                                </div>
-                                        <div class="row">
-                                                    <div class="input-field col s12">
-                                                        <select>
-                                                            <option value="" disabled selected>Select Department</option>
-                                                            <option value="1">Software</option>
-                                                            <option value="2">Banking & Finance</option>
-                                                            <option value="4">Transport & Logistics</option>
-                                                            <option value="5">Human Resource</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="input-field col s12">
-                                                        <select>
-                                                            <option value="" disabled selected>Select Course</option>
-                                                            <option value="1">Case Study</option>
-                                                            <option value="2">French</option>
-                                                            <option value="4">English</option>
-                                                            <option value="5">Law and Citizenship</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="input-field col s12">
-                                                        <select>
-                                                            <option value="" disabled selected>Select Day</option>
-                                                            <option value="1">Monday</option>
-                                                            <option value="2">Tuesday</option>
-                                                            <option value="4">Wednesday</option>
-                                                            <option value="4">Thursday</option>
-                                                            <option value="5">Friday</option>
-                                                            <option value="5">Saturday</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            <div class="row">
-                                                    <div class="input-field col s12">
-                                                        <select>
-                                                            <option value="" disabled selected>Select Hall</option>
-                                                            <option value="1">Hall 1</option>
-                                                            <option value="2">Hall 2</option>
-                                                            <option value="4">Hall 3</option>
-                                                            <option value="5">Hall 4</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            <div class="row">
-                                                <div class="input-field col s12">
-                                                    <select>
-                                                        <option value="" disabled selected>Select Time</option>
-                                                        <option value="1">08am - 10am</option>
-                                                        <option value="2">10am - 12pm</option>
-                                                        <option value="3">01pm - 03pm</option>
-                                                        <option value="4">03pm - 05pm</option>
-                                                        <option value="5">05pm - 07pm</option>
-                                                        <option value="6">07pm - 09pm</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        <div class="row">
-                                            <div class="input-field col s12">
-                                                <i class="waves-effect waves-light btn-large waves-input-wrapper" style=""><input type="submit" class="waves-button-input" value="Submit"></i>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
    <!--Import jQuery before materialize.js-->
     <script src="{{asset('/js/main.min.js')}}"></script>
     <script src="{{asset('/js/bootstrap.min.js')}}"></script>

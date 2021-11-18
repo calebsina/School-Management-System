@@ -49,7 +49,7 @@
         <div class="account-form-inner">
             <div class="account-container">
                 <div class="heading-bx left">
-                    <h2 class="title-head">Login to your <span>Account</span></h2>
+                    <h2 class="title-head">Admin Login <span></span></h2>
                 </div>
                 <form class="contact-bx" method="post" action="{{route('login-user')}}" enctype="multipart/form-data">
                     @if(Session::has('success'))
@@ -85,13 +85,6 @@
                         </div>
                         <div class="col-lg-12 m-b30">
                             <button name="submit" type="submit" value="Submit" class="btn button-md">Login</button>
-                        </div>
-                        <div class="col-lg-12">
-                            <h6>Login with Social media</h6>
-                            <div class="d-flex">
-                                <a class="btn flex-fill m-r5 facebook" href="#"><i class="fa fa-facebook"></i>Facebook</a>
-                                <a class="btn flex-fill m-l5 google-plus" href="#"><i class="fa fa-google-plus"></i>Google Plus</a>
-                            </div>
                         </div>
                     </div>
                 </form>

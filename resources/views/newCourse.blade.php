@@ -98,10 +98,11 @@
                                             <div class="row">
                                                 <div class="input-field col s12">
                                                     <select name="speciality" >
-                                                        <option value="{{old('speciality')}}" disabled selected>Select Specialty</option>
-                                                        <option value="Banking and Finance">Banking and Finance</option>
-                                                        <option value="Software Engineering">Software Engineering</option>
-                                                        <option value="Transport and logistics">Transport and Logistics</option>
+                                                        {{$special = DB::table('specialities')->select('name')->get()}}
+                                                        <option value="" disabled selected>Select Speciality</option>
+                                                        @foreach($special as $key)
+                                                            <option value="{{$key->name}}">{{$key->name}}</option>
+                                                        @endforeach
                                                     </select>
                                                     <span class="text-danger">@error('speciality') {{$message}} @enderror</span>
                                                 </div>
@@ -222,10 +223,10 @@
             <div class="row">
                 <div class="input-field col s12">
                     <select name="dep_id">
-                        {{$depart = DB::table('departments')->select('dep_id','name')->get()}}
+                        {{$depart = DB::table('departments')->select('dep_id','dep_name')->get()}}
                         <option value="" disabled selected>Select Department</option>
                     @foreach($depart as $key)
-                            <option value="{{$key->dep_id}}">{{$key->name}}</option>
+                            <option value="{{$key->dep_id}}">{{$key->dep_name}}</option>
                         @endforeach
                     </select>
                     <span class="text-danger">@error('dep_id') {{$message}} @enderror</span>
