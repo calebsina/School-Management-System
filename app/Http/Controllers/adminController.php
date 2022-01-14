@@ -59,6 +59,7 @@ class adminController extends Controller
        $course->lecturer = $request->lecturer;
        $course->speciality = $request->speciality;
        $res = $course->save();
+
        if($res){
            return back()->with('success','course created successfully');
        }else{
